@@ -92,6 +92,17 @@ en:
 <%=it "copy", link: "mailto:igel@igels.net", user: 'iGEL', b: It.tag(:b) %>
 ```
 
+When you only need plain tags, keys starting with `tag_` or ending with `_tag` will be inferred to use `It.tag` unless you pass them yourself.
+
+```yaml
+en:
+  praise: You are %{em_tag:awesome}!
+```
+
+```erb
+<%=it "praise" %>
+```
+
 To use **it** outside of the view layer, just use `It.it`:
 
 ```ruby

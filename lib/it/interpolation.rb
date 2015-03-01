@@ -7,6 +7,7 @@ module It
       self.values = values
 
       convert_links
+      convert_tags
     end
 
     def process
@@ -26,6 +27,15 @@ module It
     def convert_links
       if key =~ /(\Alink\Z|_link\Z|\Alink_)/ && values[key].is_a?(String)
         self.values[key] = It::Link.new(values[key])
+      end
+    end
+
+    # Convert keys without arguments into It::Tags, if they are named tag_* or *_tag
+    def convert_tags
+      tag_regex = /(\Atag_|_tag\Z)/
+      if key =~ tag_regex && values[key].nil?
+        tag_name = key.remove(tag_regex)
+        self.values[key] = It::Tag.new(tag_name)
       end
     end
 

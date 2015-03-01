@@ -38,6 +38,22 @@ describe It::Interpolation do
 
       expect(interpolation.values['github_link']).to be_kind_of(It::Link)
     end
+
+    it 'infers an It::Tag from the key name if the key starts with tag_' do
+      interpolation = It::Interpolation.new('%{tag_strong:text}', {})
+
+      tag = interpolation.values['tag_strong']
+      expect(tag).to be_kind_of(It::Tag)
+      expect(tag.tag_name).to be(:strong)
+    end
+
+    it 'infers an It::Tag from the key name if the key ends with _tag' do
+      interpolation = It::Interpolation.new('%{strong_tag:text}', {})
+
+      tag = interpolation.values['strong_tag']
+      expect(tag).to be_kind_of(It::Tag)
+      expect(tag.tag_name).to be(:strong)
+    end
   end
 
   describe '#process' do
